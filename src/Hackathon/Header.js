@@ -1,17 +1,32 @@
 import { Typography } from "@mui/material";
 import Button from '@mui/material/Button';
 
-const Header = ({ setIsLoggedIn }) => {
+const Header = ({ isLoggedIn, setIsLoggedIn, employeeId, logOutHandler }) => {
     return (
-        <div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingTop: '12px',
+            paddingLeft: '12px',
+            paddingRight: '12px',
+            paddingBottom: '12px',
+            background: '#7A8BFF',
+            alignItems: 'center'
+        }}>
+            <div style={{
+                fontSize: '20px',
+                fontWeight: '600'
+            }}>{(isLoggedIn && employeeId) ? `EMPLOYEE NO : ${employeeId}` : ""}</div>
+
             <div>
-                employee no
+            <div style={{
+                fontSize: '20px',
+                fontWeight: '720'
+            }}>HACKATHON</div>
             </div>
             <div>
-                <Typography variant="poster">HACKATHON</Typography>
-            </div>
-            <div>
-                <Button onClick={() => setIsLoggedIn(false)}>LOG OUT</Button>
+                <Button variant="contained" onClick={() => logOutHandler()}>LOG OUT</Button>
             </div>
         </div>
     );

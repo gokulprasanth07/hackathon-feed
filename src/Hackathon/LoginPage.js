@@ -27,7 +27,7 @@ export default function BasicModal({ employeeId, setEmployeeId, isLoggedIn, setI
         // console.log(">>> employeeIds", typeof (employeeIds[0]), typeof (employeeId));
         if (employeeIds.includes(employeeId)) {
             localStorage.setItem("isUserLoggedIn", true);
-            localStorage.setItem("employeeId", employeeId);
+            localStorage.setItem("employeeId", Number(employeeId));
             setIsLoggedIn(true);
         } else {
             alert('Invalid employee id');
@@ -56,7 +56,7 @@ export default function BasicModal({ employeeId, setEmployeeId, isLoggedIn, setI
                     <TextField
                         id="outlined-basic"
                         label="Employee Id"
-                        value={employeeId}
+                        value={Number(employeeId)}
                         onChange={(e) => setEmployeeId(Number(e?.target?.value))}
                     />
                     <br /> <br />

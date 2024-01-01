@@ -110,7 +110,7 @@ const CreateHackathonForm = ({ newHack, setNewHack, addHackathonItemHandler }) =
 
                                 <br /> <br />
                                 <Button variant="contained" onClick={actionHandler}>
-                                    Create Hackathon Item
+                                    Create Hack Idea
                                 </Button>
                             </Box>
                         </Modal>
