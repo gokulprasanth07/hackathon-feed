@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import {TextField, Typography}   from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 
 import HackathonImg from "./Images/hackathon.png";
 
@@ -23,10 +23,11 @@ export default function BasicModal({ employeeId, setEmployeeId, isLoggedIn, setI
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    // new function to validate employee id
     const validateEmployeeId = () => {
-        console.log(">>> employeeIds", typeof (employeeIds[0]), typeof (employeeId));
+        // console.log(">>> employeeIds", typeof (employeeIds[0]), typeof (employeeId));
         if (employeeIds.includes(employeeId)) {
+            localStorage.setItem("isUserLoggedIn", true);
+            localStorage.setItem("employeeId", employeeId);
             setIsLoggedIn(true);
         } else {
             alert('Invalid employee id');
@@ -50,14 +51,14 @@ export default function BasicModal({ employeeId, setEmployeeId, isLoggedIn, setI
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                
+
                 <Box sx={style}>
-                    <TextField 
-                                id="outlined-basic"
-                                label="Employee Id"
-                                value={employeeId}
-                                onChange={(e) => setEmployeeId(Number(e?.target?.value))}
-                            />
+                    <TextField
+                        id="outlined-basic"
+                        label="Employee Id"
+                        value={employeeId}
+                        onChange={(e) => setEmployeeId(Number(e?.target?.value))}
+                    />
                     <br /> <br />
                     <Button variant="contained" onClick={validateEmployeeId}>Login</Button>
                     <br /> <br />

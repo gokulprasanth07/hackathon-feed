@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import BasicModal from "./Hackathon/LoginPage";
 import HackathonFeedPage from "./Hackathon/HackathonFeedPage";
 import CreateHackathonForm from "./Hackathon/CreateHackathonForm";
+import Button from '@mui/material/Button';
 
 
 
@@ -10,40 +11,37 @@ function App() {
   const [hackList, setHackList] = useState([]);
   const [newHack, setNewHack] = useState({ title: '', desc: '', tag: [] });
   const [employeeId, setEmployeeId] = useState(''); // new state for employee id
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // new state for login status
+  const [listLength, setListLength] = useState(0);
+
+  let storedLoginStatus = localStorage?.getItem('isUserLoggedIn') || false;
+  const [isLoggedIn, setIsLoggedIn] = useState(storedLoginStatus); // new state for login status
+
   const [employeeIds, setEmployeeIds] = useState([1, 2, 3, 4, 5, 6]); // new state for employee ids
 
   useEffect(() => {
     const storedChallenges = JSON.parse(localStorage.getItem('hackList')) || [];
-    const storedEmployeeIds = JSON.parse(localStorage.getItem('employeeIds')) || [];
-    console.log(">>> from local storage", storedChallenges, storedEmployeeIds);
-
+    // const storedEmployeeIds = JSON.parse(localStorage.getItem('employeeId')) || [];
+    console.log(">>> from local storage", storedChallenges);
     setHackList(storedChallenges);
-    setEmployeeIds(storedEmployeeIds);
+    setListLength(storedChallenges?.length);
+    // setEmployeeIds(storedEmployeeIds);
 
   }, []);
-
-
 
   const addHackathonItemHandler = (e) => {
     if(newHack?.title === "" || newHack?.desc === ""){ // form validations
       alert("Please fill in all the required fields : name and description fields");
       return;
     }
-    setHackList([...hackList, { ...newHack, votes: 0, date: new Date() }]);
+
+    setHackList((prevList) => {
+      let updatedHackListArr = [...prevList, { ...newHack, votes: 0, date: new Date() }];
+      localStorage?.setItem('hackList', JSON.stringify(updatedHackListArr));
+      return updatedHackListArr;
+    });
+
     setNewHack({ title: '', desc: '', tags: [] });
   }
-
-
-  useEffect(() => {
-    console.log(">> did update :", hackList);
-
-    localStorage?.setItem('hackList', JSON.stringify(hackList));
-    localStorage?.setItem('employeeIds', JSON.stringify(employeeIds)); // save employee ids to local storage
-
-    console.log(">>> fetched from LS", JSON.parse(localStorage.getItem('hackList')) || []);
-
-  }, [hackList]);
 
   const sortArr = (sortBy) => {
     console.log(">>> sort fn");
@@ -53,6 +51,7 @@ function App() {
     } else {
       sortedArr.sort((a, b) => a.date > b.date ? 1 : -1);
     }
+    localStorage?.setItem('hackList', JSON.stringify(sortedArr));
     setHackList(sortedArr);
   }
 
@@ -63,12 +62,14 @@ function App() {
     if (updatedList[index]) {
       updatedList[index].votes += 1;
       setHackList(updatedList);
+      localStorage?.setItem('hackList', JSON.stringify(updatedList));
     }
   }
 
   return (
     <div className='App'>
       <br /> <br />
+      <Button onClick={() => setIsLoggedIn(false)}>LOG OUT</Button>
       {isLoggedIn ? (
         <>
           <CreateHackathonForm newHack={newHack} setNewHack={setNewHack} addHackathonItemHandler={addHackathonItemHandler} />

@@ -42,13 +42,8 @@ const CreateHackathonForm = ({ newHack, setNewHack, addHackathonItemHandler }) =
     }
 
     const handleTagsChange = (event, selectedTags) => {
-        // setSelectedTagsList(selectedTags);
         setNewHack({ ...newHack, tags: selectedTags});
       };
-
-    //   React.useEffect(() => {
-    //             console.log('> Selected Tags:', selectedTagsList);
-    //   }, [selectedTagsList]);
 
     return (
         <div>

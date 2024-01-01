@@ -7,16 +7,10 @@ import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import Chip from '@mui/material/Chip';
 
-const upvoteStyle = {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
-}
-
 const HackathonFeedPage = ({ hackList, upvoteActionHandler, sortArr }) => {
 
     if (!hackList?.length) {
-        return (<div style={{paddingTop: '6%'}}><h2>there are no hackathon items as of now, <br /> click on CREAT A NEW HACKATHON to create new hack ideas.</h2></div>);
+        return (<div style={{ paddingTop: '6%' }}><h2>there are no hackathon items as of now, <br /> click on CREAT A NEW HACKATHON to create new hack ideas.</h2></div>);
     }
 
     console.log("HL", hackList);
@@ -27,9 +21,13 @@ const HackathonFeedPage = ({ hackList, upvoteActionHandler, sortArr }) => {
             <Button sx={{ marginLeft: '12px' }} variant="outlined" onClick={() => sortArr("time")}>sort by time</Button>
         </div>
             <div>{hackList?.length && hackList?.map((item, index) => (
-                <Paper elevation={12} sx={{ marginLeft: '236px', marginRight: '236px', marginTop: '32px', marginBottom: '32px', borderRadius: '6px' }}>
+                <Paper elevation={12} sx={{ marginLeft: '12%', marginRight: '12%', marginTop: '32px', marginBottom: '32px', borderRadius: '6px' }}>
                     <Box sx={{ padding: '12px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'row', gap: '56px' }}>
+                        <div style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '56px',
+                        }}>
                             <div>
                                 <img width="420" height="240" src={FeedImg} style={{ borderRadius: '6px' }} />
                             </div>
