@@ -14,18 +14,24 @@ const Header = ({ isLoggedIn, setIsLoggedIn, employeeId, logOutHandler }) => {
             background: '#7A8BFF',
             alignItems: 'center'
         }}>
-            <div style={{
-                fontSize: '20px',
-                fontWeight: '600'
-            }}>{(isLoggedIn && employeeId) ? `EMPLOYEE NO : ${employeeId}` : ""}</div>
+            <div
+                id="header-emp-id"
+                style={{
+                    fontSize: '20px',
+                    fontWeight: '600'
+                }}>{(isLoggedIn && employeeId) ? `EMPLOYEE NO : ${employeeId}` : ""}</div>
 
             <div>
-            <div style={{
-                fontSize: '20px',
-                fontWeight: '720'
-            }}>HACKATHON</div>
+                <div
+                    id="header-hack-text"
+                    style={{
+                        fontSize: '20px',
+                        fontWeight: '720'
+                    }}>HACKATHON</div>
             </div>
-            <div>
+            <div
+                id="header-logout-text"
+            >
                 <Button variant="contained" onClick={() => logOutHandler()}>LOG OUT</Button>
             </div>
         </div>

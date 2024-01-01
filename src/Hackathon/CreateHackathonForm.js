@@ -93,6 +93,7 @@ const CreateHackathonForm = ({ newHack, setNewHack, addHackathonItemHandler }) =
 
                                 <Autocomplete
                                     multiple
+                                    data-testid="tags-standard" 
                                     id="tags-standard"
                                     options={TAGS}
                                     getOptionLabel={(option) => option}
@@ -109,7 +110,7 @@ const CreateHackathonForm = ({ newHack, setNewHack, addHackathonItemHandler }) =
                                 />
 
                                 <br /> <br />
-                                <Button variant="contained" onClick={actionHandler}>
+                                <Button id="create-hack-btn" variant="contained" onClick={actionHandler}>
                                     Create Hack Idea
                                 </Button>
                             </Box>

@@ -25,9 +25,9 @@ export default function BasicModal({ employeeId, setEmployeeId, isLoggedIn, setI
 
     const validateEmployeeId = () => {
         // console.log(">>> employeeIds", typeof (employeeIds[0]), typeof (employeeId));
-        if (employeeIds.includes(employeeId)) {
+        if (employeeIds.includes(Number(employeeId))) {
             localStorage.setItem("isUserLoggedIn", true);
-            localStorage.setItem("employeeId", Number(employeeId));
+            localStorage.setItem("employeeId", employeeId);
             setIsLoggedIn(true);
         } else {
             alert('Invalid employee id');
@@ -56,8 +56,8 @@ export default function BasicModal({ employeeId, setEmployeeId, isLoggedIn, setI
                     <TextField
                         id="outlined-basic"
                         label="Employee Id"
-                        value={Number(employeeId)}
-                        onChange={(e) => setEmployeeId(Number(e?.target?.value))}
+                        value={employeeId}
+                        onChange={(e) => setEmployeeId(e?.target?.value)}
                     />
                     <br /> <br />
                     <Button variant="contained" onClick={validateEmployeeId}>Login</Button>

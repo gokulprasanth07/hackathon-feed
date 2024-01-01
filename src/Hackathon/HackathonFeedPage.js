@@ -21,7 +21,7 @@ const HackathonFeedPage = ({ hackList, upvoteActionHandler, sortArr }) => {
             <Button sx={{ marginLeft: '12px' }} variant="outlined" onClick={() => sortArr("time")}>sort by time</Button>
         </div>
             <div>{hackList?.length && hackList?.map((item, index) => (
-                <Paper elevation={12} sx={{ marginLeft: '12%', marginRight: '12%', marginTop: '32px', marginBottom: '32px', borderRadius: '6px' }}>
+                <Paper key={item?.id} elevation={12} sx={{ marginLeft: '12%', marginRight: '12%', marginTop: '32px', marginBottom: '32px', borderRadius: '6px' }}>
                     <Box sx={{ padding: '12px' }}>
                         <div style={{
                             display: 'flex',
@@ -34,8 +34,8 @@ const HackathonFeedPage = ({ hackList, upvoteActionHandler, sortArr }) => {
                             <div style={{ width: '50%', marginTop: '44px', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
                                 <div><Typography variant="h4">{item?.title}</Typography>
                                     <Typography variant="h6">{item?.desc}</Typography></div>
-                                <span>{item?.tags?.map(tag => (
-                                    <Chip variant="outlined" label={tag} />
+                                <span>{item?.tags?.map((tag, index) => (
+                                    <Chip key={`tag-${index}`} variant="outlined" label={tag} />
                                 ))}</span>
                                 <span>created at {new Date(item?.date).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}</span>
                                 <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '6px', color: 'blue', fontWeight: '660' }}>
@@ -43,7 +43,7 @@ const HackathonFeedPage = ({ hackList, upvoteActionHandler, sortArr }) => {
                                 </div>
                             </div>
                             <span onClick={() => upvoteActionHandler(index)} style={{ width: '4%', marginTop: '66px', marginRight: '36px' }}>
-                                <div style={{ display: 'flex', position: 'relative', justifyContent: 'flex-end', margin: 'auto', cursor: 'pointer' }}><div><ThumbUpAltOutlined sx={{ width: '56px', height: '64px' }} /></div> &nbsp;</div>
+                                <div style={{ display: 'flex', position: 'relative', justifyContent: 'flex-end', margin: 'auto', cursor: 'pointer' }}><div><ThumbUpAltOutlined sx={{ width: '56px', height: '64px' }} /><span style={{color:'grey'}}> click to upvote</span></div> &nbsp;</div>
                             </span>
                         </div>
 
