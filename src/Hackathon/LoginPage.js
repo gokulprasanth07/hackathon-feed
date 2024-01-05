@@ -26,7 +26,7 @@ export default function BasicModal({ employeeId, setEmployeeId, isLoggedIn, setI
     const validateEmployeeId = () => {
         // console.log(">>> employeeIds", typeof (employeeIds[0]), typeof (employeeId));
         if (employeeIds.includes(Number(employeeId))) {
-            localStorage.setItem("isUserLoggedIn", true);
+            localStorage.setItem("isUserLoggedIn", !!(true));
             localStorage.setItem("employeeId", employeeId);
             setIsLoggedIn(true);
         } else {

@@ -6,8 +6,20 @@ import FeedImg from "./Images/feed03.avif";
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import Chip from '@mui/material/Chip';
+import { useEffect, useState } from 'react';
 
 const HackathonFeedPage = ({ hackList, upvoteActionHandler, sortArr }) => {
+    const [voteSortOrder, setVoteSortOrder] = useState("asc");
+
+
+    useEffect(() => {
+        sortArr("votes", voteSortOrder);
+        console.log("> voteSortOrder", voteSortOrder);
+    }, [voteSortOrder]);
+
+    const sortBtnClick = (str) => {
+        setVoteSortOrder(prev => prev === "asc" ? "desc" : "asc");
+    }
 
     if (!hackList?.length) {
         return (<div style={{ paddingTop: '6%' }}><h2>there are no hackathon items as of now, <br /> click on CREAT A NEW HACKATHON to create new hack ideas.</h2></div>);
@@ -17,7 +29,7 @@ const HackathonFeedPage = ({ hackList, upvoteActionHandler, sortArr }) => {
     return (
         <><div>
             <br /> <br />
-            <Button variant="outlined" onClick={() => sortArr("votes")}>sort by upvotes</Button>
+            <Button variant="outlined" onClick={() => sortBtnClick("votes")}>sort by upvotes</Button>
             <Button sx={{ marginLeft: '12px' }} variant="outlined" onClick={() => sortArr("time")}>sort by time</Button>
         </div>
             <div>{hackList?.length && hackList?.map((item, index) => (

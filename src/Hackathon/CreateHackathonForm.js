@@ -42,6 +42,7 @@ const CreateHackathonForm = ({ newHack, setNewHack, addHackathonItemHandler }) =
     }
 
     const handleTagsChange = (event, selectedTags) => {
+        console.log("> sel tags", selectedTags);
         setNewHack({ ...newHack, tags: selectedTags});
       };
 
@@ -97,16 +98,17 @@ const CreateHackathonForm = ({ newHack, setNewHack, addHackathonItemHandler }) =
                                     id="tags-standard"
                                     options={TAGS}
                                     getOptionLabel={(option) => option}
-                                    defaultValue={[TAGS[0]]}
+                                    // defaultValue={[TAGS[0]]}
                                     onChange={handleTagsChange}
-                                    renderInput={(params) => (
-                                        <TextField
+                                    renderInput={(params) => {
+                                        console.log("> params:", params);
+                                        return (<TextField
                                             {...params}
                                             variant="standard"
                                             label="select the tags"
                                             placeholder="select the tags"
-                                        />
-                                    )}
+                                        />);
+                                    }}
                                 />
 
                                 <br /> <br />

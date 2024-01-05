@@ -12,9 +12,11 @@ function App() {
   const [employeeId, setEmployeeId] = useState(localStorage.getItem('employeeId') || ""); // new state for employee id
   const [listLength, setListLength] = useState(0);
 
-  let storedLoginStatus = localStorage?.getItem('isUserLoggedIn') || false;
+  let storedLoginStatus = !!( localStorage?.getItem('isUserLoggedIn'));
   const [isLoggedIn, setIsLoggedIn] = useState(storedLoginStatus); // new state for login status
   const [employeeIds, setEmployeeIds] = useState([1, 2, 3, 4, 5, 6]); // new state for employee ids
+
+  
 
   useEffect(() => {
     const storedChallenges = JSON.parse(localStorage.getItem('hackList')) || [];
@@ -26,13 +28,14 @@ function App() {
   }, [listLength]);
 
   const addHackathonItemHandler = (e) => {
-    if (newHack?.title === "" || newHack?.desc === "") { // form validations
+    if (newHack?.title === "" || newHack?.desc === "" || newHack?.tags?.length === 0) { // form validations
       alert("Please fill in all the required fields : name and description fields");
       return;
     }
 
+    
     setHackList((prevList) => {
-      let updatedHackListArr = [...prevList, { ...newHack, votes: 0, date: new Date(), id: `hack-id-${listLength + 1}` }];
+      let updatedHackListArr = [...prevList, { ...newHack, votes: 0, date: new Date(), id: `hack-id-${listLength + 1}`, empid: employeeId, votedEmps: [] }];
       localStorage?.setItem('hackList', JSON.stringify(updatedHackListArr));
       return updatedHackListArr;
     });
@@ -40,12 +43,15 @@ function App() {
     setNewHack({ title: '', desc: '', tags: [] });
   }
 
-  const sortArr = (sortBy) => {
+  const sortArr = (sortBy, voteSortOrder="asc") => {
     let sortedArr = [...hackList];
+
     if (sortBy === "votes") {
-      sortedArr.sort((a, b) => a.votes > b.votes ? -1 : 1);
-    } else {
-      sortedArr.sort((a, b) => a.date > b.date ? 1 : -1);
+      if(voteSortOrder === "asc") {
+        sortedArr.sort((a, b) => a.votes > b.votes ? -1 : 1);
+      } else {
+        sortedArr.sort((a, b) => a.votes < b.votes ? -1 : 1);
+      }
     }
     localStorage?.setItem('hackList', JSON.stringify(sortedArr));
     setHackList(sortedArr);
@@ -53,19 +59,27 @@ function App() {
 
 
   const upvoteActionHandler = (index) => {
+
     let updatedList = [...hackList];
-    if (updatedList[index]) {
+    console.log("> BOOLEAN", Number(updatedList[index]?.empid) );
+    if (updatedList[index] && Number(updatedList[index]?.empid) != employeeId &&
+    !(updatedList[index] && updatedList[index].votedEmps && updatedList[index].votedEmps.includes(employeeId))
+    ) {
       updatedList[index].votes += 1;
+      updatedList[index].votedEmps.push(employeeId);
       setHackList(updatedList);
       localStorage?.setItem('hackList', JSON.stringify(updatedList));
     }
+
   }
 
   const logOutHandler = () => {
     setIsLoggedIn(false);
     localStorage.clear('employeeId');
-    localStorage.setItem('isUserLoggedIn', false);
+    localStorage.setItem('isUserLoggedIn', !!(false));
   }
+
+  // useEffect(() => console.log("> isUserLoggedIn: ", isLoggedIn), [isLoggedIn]);
 
   return (
     <div className='App'>
